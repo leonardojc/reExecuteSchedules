@@ -1,28 +1,66 @@
-# reExecuteSchedules Project
+# reExecuteSchedules
 
-Based on the instructions and expected behavior, the reExecuteSchedules function follows these main steps:
+This repository contains the implementation of the `reExecuteSchedules` function for the IoT Systems.
 
-   - It is called with a loadController object:
-    reExecuteSchedules(loadController)
+##  Assignment Summary
 
-   - It reads the Redis cache to retrieve the last saved values.
+Develop a robust and efficient `reExecuteSchedules` function to manage the re-execution of schedules for load controllers. These controllers are part of a LoRaWAN-based IoT system that automates and controlling  devices based on predefined schedules.
 
-   - It compares the current loadController values with the cached data.
+### Deliverables
 
-   - If any pin values differ, it triggers an API call to /api/reExecutePin.
+-  `reExecuteSchedules` function implemented in **TypeScript**.
+-  Unit tests written using **Jest**.
+-  This `README` with an explanation of the approach and assumptions made.
 
-   - It handles different error scenarios gracefully.
+---
 
-   - It generates a log.txt file containing detailed logs of the process.
+##  How It Works
 
+Based on the assignment description and expected behavior, the `reExecuteSchedules` function operates as follows:
 
+1. **Call the function**  
+   Use `reExecuteSchedules(loadController)` to trigger the process.
 
+2. **Read Redis cache**  
+   The function reads the last saved values for the controller from Redis.
 
-## Overview
-This project provides a `reExecuteSchedules` function to manage scheduled timings for IoT controllers. It checks cache status and executes actions according to configured schedules for each pin.
+3. **Compare data**  
+   It compares the current state of the `loadController` with the cached data.
+
+4. **API call on changes**  
+   If there are differences in pin states, the function makes a request to the `/api/reExecutePin` endpoint.
+
+5. **Handle errors**  
+   Various error handling scenarios are considered and logged accordingly.
+
+6. **Logging**  
+   A detailed `log.txt` file is generated with timestamped logs for debugging and traceability.
+
+---
+
+##  Web Testing Interface
+
+To better understand and test the `reExecuteSchedules` function, I created a simple `WebTest` page that allows for:
+
+- Manually configuring a JSON `loadController` object.
+- Sending the object to the function.
+- Visualizing the result of the execution process.
+
+---
+
+## 🧠 Notes & Reflections
+
+- The biggest learning experience was working with **Jest** for unit testing. I had used it very little before, so I took this opportunity to strengthen that skill.
+- I chose to keep the code clean, modular, and easy to follow.
+- The Redis and API logic were mocked to simulate expected behavior in a real environment.
+
+---
+
 
 ## Installation
-1. uncrompress the file in a folder
+1. Clone repo
+git clone https://github.com/leonardojc/reExecuteSchedules
+cd reExecuteSchedules
 
 2. Install dependencies:
 npm install
