@@ -1,0 +1,19 @@
+{
+  "name": "re-execute-schedules",
+  "version": "1.0.0",
+  "description": "Function  reExecuteSchedule",
+  "main": "reExecuteSchedules.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^20.17.30",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.3.1",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}

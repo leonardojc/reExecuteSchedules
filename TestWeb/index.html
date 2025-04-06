@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test reExecuteSchedule</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .main-container {
+            display: flex;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .panel {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #444;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"] {
+            width: 95%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+            font-family: monospace;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fafafa;
+            min-height: 100px;
+        }
+
+        .pin {
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #f9f9f9;
+        }
+
+        .pin-controls {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .pin-controls label {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 10px;
+            align-items: center;
+            margin: 0;
+        }
+
+        .pin-name {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        .remove-pin {
+            padding: 8px 12px;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .remove-pin:hover {
+            background: #d32f2f;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .schedule-container {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 5px;
+        }
+
+        .day-schedule {
+            margin-bottom: 8px;
+            padding: 5px;
+            background: white;
+            border-radius: 3px;
+        }
+
+        .day-schedule label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Test reExecuteSchedule Function </h1>
+
+    <div class="main-container">
+        <!-- Primera columna -->
+        <div class="column">
+            <div class="panel" id="controllerConfig">
+                <h2>Controller Configuration</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            
+                    <label>
+                        Select UUID:
+                        <select id="controllerUuid">
+                            <option value="" hidden>Select an UUID...</option>
+                            <option value="Uuid-Expired-Cache">Uuid-Expired-Cache</option>
+                            <option value="Uuid-Valid-Cache">Uuid-Valid-Cache</option>
+                            <option value="Uuid-Miss-Cache">Uuid-Miss-Cache</option>
+                        </select>
+                    </label>
+            
+                    <label>
+                        Timezone:
+                        <select id="controllerTimezone">
+                            <option value="US/Eastern">US/Eastern</option>
+                            <option value="US/Central">US/Central</option>
+                            <option value="US/Mountain">US/Mountain</option>
+                            <option value="US/Arizona" selected>US/Arizona</option>
+                            <option value="US/Pacific">US/Pacific</option>
+                            <option value="US/Alaska">US/Alaska</option>
+                            <option value="US/Hawaii">US/Hawaii</option>
+                        </select>
+                    </label>
+                    <label>
+                        Identifier:
+                        <input type="text" id="controllerIdentifier" value="fake-identifier">
+                    </label>
+            
+                    <label>
+                        Location UUID:
+                        <input type="text" id="controllerLocationUuid" value="fake-location-uuid">
+                    </label>
+                    <label>
+                        Type UUID:
+                        <input type="text" id="controllerTypeUuid" value="fake-type-uuid">
+                    </label>
+            
+                </div>
+            </div>
+            
+
+            <div class="panel" id="pinControls">
+                <h2>Pin Configuration</h2>
+                <div id="pinsContainer"></div>
+                <button id="addPinBtn">Add Pin</button>
+            </div>
+        </div>
+
+        <!-- Segunda columna -->
+        <div class="column">
+            <div class="action-buttons">
+                <button id="executeBtn">Execute Schedule</button>
+            </div>
+
+            <div class="panel">
+                <h2>Result</h2>
+                <div id="result"></div>
+            </div>
+
+            <!-- <div class="action-buttons">
+                <button id="generateJsonBtn">Generate JSON</button>
+            </div> -->
+            <div class="panel">
+                <h2>Generated JSON</h2>
+                <textarea id="controllerData" placeholder="Generated JSON will appear here..."></textarea>
+            </div>
+
+
+
+        </div>
+    </div>
+
+
+
+    <template id="pinTemplate">
+        <div class="pin" style="margin-bottom: 15px; padding: 10px; border: 1px solid #ddd;">
+            <h3>Pin <span class="pin-number">1</span></h3>
+            <label>
+                Name: <input type="text" class="pin-name" value="Pin Name">
+            </label>
+            <button class="remove-pin">Remove</button>
+        </div>
+    </template>
+
+    <script src="main.js" defer></script>
+</body>
+
+</html>
