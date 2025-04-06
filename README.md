@@ -59,15 +59,20 @@ To better understand and test the `reExecuteSchedules` function, I created a sim
 
 ## Installation
 1. Clone repo
+```bash
 git clone https://github.com/leonardojc/reExecuteSchedules
 cd reExecuteSchedules
+```
 
 2. Install dependencies:
+```bash
 npm install
+```
 
 3. Compile TypeScript:
+```bash
 tsc
-
+```
 
 ## reExecuteSchedules Function
 
